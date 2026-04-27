@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v6.41.1 (2026-04-27)
+
+### Fix
+
+* fix: move eval mask onto sae.device for cross-device runs (#675) ([`28738cf`](https://github.com/decoderesearch/SAELens/commit/28738cf85feb01ad58f37445294cefe6e5bb323d))
+
 ## v6.41.0 (2026-04-27)
 
 ### Feature
