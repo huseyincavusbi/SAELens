@@ -123,6 +123,7 @@ class ActivationsStore:
                 "You must either pass in a dataset or specify a dataset_path in your configutation."
             )
 
+        assert cfg.act_store_device is not None  # set in cfg.__post_init__
         device = torch.device(cfg.act_store_device)
         exclude_special_tokens = cfg.exclude_special_tokens
         if exclude_special_tokens is False:
@@ -682,7 +683,9 @@ class ActivationsStore:
 
         # reshape from (batch, context, d_in) to (batch * context, d_in)
         activations = activations.reshape(-1, d_in)
-        token_ids = batch_tokens.reshape(-1)
+        # tokens come from the LLM device; move them alongside activations so
+        # downstream filtering (e.g. exclude_special_tokens) lives on one device.
+        token_ids = batch_tokens.reshape(-1).to(self.device)
 
         return activations, token_ids
 

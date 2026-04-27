@@ -81,7 +81,8 @@ class LanguageModelSAERunnerConfigDict(TypedDict, total=False):
     disable_concat_sequences: bool
     sequence_separator_token: int | Literal["bos", "eos", "sep"] | None
     device: str
-    act_store_device: str
+    llm_device: str | None
+    act_store_device: str | None
     seed: int
     dtype: str
     prepend_bos: bool
