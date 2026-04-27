@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v6.41.2 (2026-04-27)
+
+### Fix
+
+* fix: more cross-device tensor bugs in evals (#676) ([`9311085`](https://github.com/decoderesearch/SAELens/commit/93110856b0c0bd6a6dcb0a2d45a01cba5a2272ca))
+
 ## v6.41.1 (2026-04-27)
 
 ### Fix
