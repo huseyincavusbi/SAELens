@@ -1,5 +1,102 @@
 # CHANGELOG
 
+## v6.40.0 (2026-04-27)
+
+### Documentation
+
+* docs: improving SynthSAEBench docs and tutorials (#671)
+
+* improving SyntSAEBench docs and tutorials
+
+* adding matryoshka and matching pursuit SAEs to the synthetic notebook
+
+* fixes from CR
+
+* more doc updates
+
+* fixing reference
+
+* fixing bias param in docs
+
+* more fixes from CR
+
+* fixing typo
+
+* more fixes from Claude
+
+* fixing another typo ([`269a356`](https://github.com/decoderesearch/SAELens/commit/269a356d759265752046303603d0532045628a45))
+
+### Feature
+
+* feat: support placing the SAE and LLM on different devices (#672)
+
+* feat: support placing the SAE and LLM on different devices
+
+Adds an `llm_device` config field so the LLM can be placed on a different
+device from the SAE during training. `device` now refers to the SAE&#39;s
+device (and is the default for everything else); `llm_device` defaults to
+`device` so single-GPU setups are unchanged.
+
+`act_store_device` now defaults to `None` and resolves to the SAE device,
+which has more memory headroom in the multi-GPU case where the LLM is
+already filling its GPU. The legacy &#34;with_model&#34; string is still accepted
+and resolves to `llm_device`.
+
+Also fixes a latent bug where autocast/GradScaler were passed a fully
+qualified device string (e.g. &#34;cuda:1&#34;) instead of the device type (&#34;cuda&#34;).
+
+Co-Authored-By: Claude Opus 4.7 (1M context) &lt;noreply@anthropic.com&gt;
+
+* docs: address PR review — document llm_device, fix helpers TypedDict
+
+- Add llm_device and update device/act_store_device entries in the
+  LanguageModelSAERunnerConfig class docstring.
+- Update LanguageModelSAERunnerConfigDict.act_store_device to
+  str | None to match the field type.
+
+Co-Authored-By: Claude Opus 4.7 (1M context) &lt;noreply@anthropic.com&gt;
+
+* removing useless test
+
+* fix: move token_ids to act_store device for filtering
+
+When the LLM and SAE live on different devices, token_ids came off the
+LLM (e.g. cuda:0) while exclude_special_tokens was constructed on the
+activation-store device (e.g. cuda:1). torch.isin then errored on the
+device mismatch. Move token_ids alongside the activations so filtering
+runs on a single device.
+
+Adds a CUDA-gated regression test that exercises the split-device path
+through get_filtered_llm_batch.
+
+Co-Authored-By: Claude Opus 4.7 (1M context) &lt;noreply@anthropic.com&gt;
+
+* test: drop cuda-only test that never runs on CI
+
+The added regression test for split-device token filtering was gated on
+torch.cuda.is_available(), which means it would always be skipped on the
+GPU-less CI runners.
+
+Co-Authored-By: Claude Opus 4.7 (1M context) &lt;noreply@anthropic.com&gt;
+
+---------
+
+Co-authored-by: Claude Opus 4.7 (1M context) &lt;noreply@anthropic.com&gt; ([`275cee6`](https://github.com/decoderesearch/SAELens/commit/275cee6223bbd177654a6a43722ed2f38bc15fdc))
+
+### Unknown
+
+* Minor SynthSAEBench Notebook Typos (#670)
+
+Corrected typos and grammatical errors in markdown cells. ([`d2ed4f0`](https://github.com/decoderesearch/SAELens/commit/d2ed4f01e3bc52ce5d50760d16cdbc40f42210f9))
+
+* Update link for pre-trained SAEs in READMEs (#668)
+
+Seems that the link currently leads to an image? Added correct link. ([`2e982e8`](https://github.com/decoderesearch/SAELens/commit/2e982e8eacae0ab5625583359baa617d12c4fcda))
+
+* Update link to importable SAEs page (#669)
+
+Similar fix to #668 . Sorry for making another issue, Github web interface doesn&#39;t let me combine them. ([`30170cd`](https://github.com/decoderesearch/SAELens/commit/30170cd34c3085b94e0fc44894bf27518cb0eaaf))
+
 ## v6.39.0 (2026-03-19)
 
 ### Chore
