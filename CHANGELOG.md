@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v6.41.0 (2026-04-27)
+
+### Feature
+
+* feat: support sharded HF models via device_map (#673) ([`546e03b`](https://github.com/decoderesearch/SAELens/commit/546e03b6173f6951473b48e4b8c12aab238d2f28))
+
 ## v6.40.0 (2026-04-27)
 
 ### Documentation
